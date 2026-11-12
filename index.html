@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact Protection Engineering Lab | HS-PS2-3</title>
+<style>
+:root{--ink:#172235;--muted:#64748b;--line:#dbe3ed;--paper:#f4f7fb;--card:#fff;--blue:#2457c5;--blue2:#eaf0ff;--green:#137a52;--greenbg:#e8f6ef;--red:#b54735;--redbg:#fff0ed;--amber:#98630b;--amberbg:#fff6df;--shadow:0 8px 26px rgba(25,45,75,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#14284b,#2457a5);color:white;padding:30px 20px 26px}
+.wrap{max-width:1180px;margin:auto;padding:0 18px}header .eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;opacity:.8;font-weight:700}h1{font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;margin:9px 0}header p{max-width:780px;margin:10px 0 0;color:#e5edff}
+.tag{display:inline-block;border:1px solid #ffffff55;border-radius:99px;padding:4px 10px;font-size:.78rem;margin:8px 6px 0 0}
+main{padding:22px 0 50px}.intro{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:var(--shadow)}
+h2{font-size:1.12rem;margin:0 0 12px}h3{font-size:.98rem;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:.84rem}.callout{background:var(--blue2);border-left:4px solid var(--blue);padding:12px 14px;border-radius:8px}
+.layout{display:grid;grid-template-columns: minmax(290px,.88fr) minmax(0,1.35fr);gap:16px;align-items:start}
+.control{margin:17px 0}.control label{display:flex;justify-content:space-between;gap:12px;font-weight:650;margin-bottom:6px}.control output{font-variant-numeric:tabular-nums;color:var(--blue);font-weight:750}
+input[type=range]{width:100%;accent-color:var(--blue)}.range-hints{display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem}
+button{border:0;border-radius:9px;padding:10px 14px;background:var(--blue);color:white;font-weight:700;cursor:pointer}button:hover{filter:brightness(.94)}button.secondary{background:#edf1f7;color:var(--ink);border:1px solid var(--line)}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #8bb0ff;outline-offset:2px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric{border:1px solid var(--line);border-radius:11px;padding:13px;background:#fbfcfe}.metric .label{color:var(--muted);font-size:.78rem}.metric .value{font-size:1.55rem;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}.metric .unit{font-size:.78rem;color:var(--muted)}
+.status{padding:10px 12px;border-radius:9px;font-weight:700;margin-top:12px}.pass{background:var(--greenbg);color:var(--green)}.fail{background:var(--redbg);color:var(--red)}
+.visual{margin-top:14px;background:linear-gradient(#f8fbff,#edf3fb);border:1px solid var(--line);border-radius:12px;padding:10px;overflow:hidden}
+svg{display:block;width:100%;height:auto}.barbg{height:12px;background:#e7edf5;border-radius:99px;overflow:hidden}.bar{height:100%;background:var(--green);width:0;transition:width .2s}.bar.over{background:#d16a35}
+.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f5f7fa;padding:9px 11px;border-radius:8px;display:block;overflow-wrap:anywhere}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.04em}
+canvas{width:100%;height:240px;display:block}.section{margin-top:16px}.question{margin:10px 0}.question label{display:block;font-weight:650;margin-bottom:5px}textarea{width:100%;min-height:68px;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;resize:vertical}
+details{border-top:1px solid var(--line);padding:12px 0}summary{font-weight:700;cursor:pointer}.note{font-size:.8rem;color:var(--muted)}
+footer{text-align:center;color:var(--muted);padding:22px;font-size:.8rem}
+@media(max-width:800px){.intro,.layout{grid-template-columns:1fr}.wrap{padding:0 13px}.card{padding:15px}}
+@media print{body{background:white}.card{box-shadow:none;break-inside:avoid}button{display:none}header{background:#18345f!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="eyebrow">Interactive virtual laboratory · High school physics</div>
+  <h1>Engineering for Impact Protection</h1>
+  <p>Design, test, and refine a protective package for a sensitive electronic sensor. Investigate how mass, impact velocity, and stopping time affect average collision force.</p>
+  <span class="tag">NGSS HS-PS2-3</span><span class="tag">Impulse & momentum</span><span class="tag">Engineering design</span>
+ </div>
+</header>
+<main class="wrap">
+ <section class="intro">
+  <div class="card">
+   <h2>Your engineering challenge</h2>
+   <p>A technology company ships delicate medical sensors. Packages are sometimes dropped during transport, damaging the electronics. Your task is to design cushioning that reduces the average force on a sensor without using more than <strong>12 cm of stopping distance</strong>.</p>
+   <div class="callout"><strong>Driving question:</strong> How can a protective device change a collision so that the sensor experiences less force?</div>
+  </div>
+  <div class="card">
+   <h2>Learning targets</h2>
+   <ul>
+    <li>Use Newton's second law and momentum ideas to explain collisions.</li>
+    <li>Investigate the impulse–momentum relationship.</li>
+    <li>Collect and interpret experimental data.</li>
+    <li>Evaluate and refine a design against criteria and constraints.</li>
+   </ul>
+  </div>
+ </section>
+
+ <section class="layout">
+  <div class="card">
+   <h2>1 · Configure the impact test</h2>
+   <p class="muted small">Change one variable at a time to make a fair comparison. The sensor is assumed to stop after impact.</p>
+   <div class="control">
+    <label for="mass">Sensor mass <output id="massOut">2.0 kg</output></label>
+    <input id="mass" type="range" min=".5" max="3" step=".5" value="2">
+    <div class="range-hints"><span>0.5 kg</span><span>3.0 kg</span></div>
+   </div>
+   <div class="control">
+    <label for="velocity">Impact velocity <output id="velocityOut">3.0 m/s</output></label>
+    <input id="velocity" type="range" min="1" max="5" step=".5" value="3">
+    <div class="range-hints"><span>1 m/s</span><span>5 m/s</span></div>
+   </div>
+   <div class="control">
+    <label for="time">Stopping time <output id="timeOut">0.07 s</output></label>
+    <input id="time" type="range" min=".01" max=".15" step=".01" value=".07">
+    <div class="range-hints"><span>0.01 s · firm impact</span><span>0.15 s · longer cushioning</span></div>
+   </div>
+   <div class="actions">
+    <button id="record">Record trial</button>
+    <button class="secondary" id="reset">Reset experiment</button>
+   </div>
+   <div class="visual">
+    <h3>Impact apparatus · Conceptual model</h3>
+    <svg viewBox="0 0 560 155" role="img" aria-label="Sensor moving toward a cushioning barrier on a test track">
+     <rect x="12" y="112" width="536" height="9" rx="4" fill="#a9b7ca"/>
+     <rect x="28" y="78" width="115" height="32" rx="7" fill="#dbe7fa" stroke="#2457c5" stroke-width="2"/>
+     <circle cx="52" cy="114" r="7" fill="#52657e"/><circle cx="120" cy="114" r="7" fill="#52657e"/>
+     <text x="85" y="98" text-anchor="middle" font-size="12" fill="#18345f" font-weight="700">SENSOR</text>
+     <path d="M160 93 H260 M249 84 L260 93 L249 102" stroke="#2457c5" stroke-width="3" fill="none"/>
+     <rect x="280" y="52" width="30" height="60" rx="4" fill="#d9e0e9" stroke="#75859a"/>
+     <rect id="cushion" x="310" y="58" width="30" height="48" rx="5" fill="#65a887" opacity=".9"/>
+     <rect x="340" y="42" width="18" height="70" rx="3" fill="#52657e"/>
+     <text x="325" y="30" text-anchor="middle" font-size="11" fill="#52657e">CUSHION</text>
+     <text x="349" y="129" text-anchor="middle" font-size="10" fill="#52657e">BARRIER</text>
+     <text x="85" y="61" text-anchor="middle" font-size="11" fill="#52657e" id="svgSpeed">3.0 m/s</text>
+     <path d="M78 66 V74" stroke="#52657e"/>
+    </svg>
+    <p class="note">Schematic only; the calculated stopping distance and force are shown at right. The drawing is not a scale animation.</p>
+   </div>
+  </div>
+
+  <div class="card">
+   <h2>2 · Live measurement panel</h2>
+   <div class="metrics">
+    <div class="metric"><div class="label">Average impact force</div><div class="value" id="force">85.7</div><div class="unit">newtons (N)</div></div>
+    <div class="metric"><div class="label">Stopping distance</div><div class="value" id="distance">10.5</div><div class="unit">centimeters (cm)</div></div>
+    <div class="metric"><div class="label">Rigid-barrier comparison</div><div class="value" id="baseline">600.0</div><div class="unit">newtons · assumed 0.01 s stop</div></div>
+    <div class="metric"><div class="label">Average-force reduction</div><div class="value" id="reduction">85.7%</div><div class="unit">compared with rigid-barrier model</div></div>
+   </div>
+   <div id="status" class="status pass" role="status">Constraint met · stopping distance is within 12 cm.</div>
+   <div style="margin-top:14px">
+    <div style="display:flex;justify-content:space-between;gap:8px;font-size:.83rem;margin-bottom:6px"><strong>Packaging-space use</strong><span id="spaceLabel">10.5 / 12 cm</span></div>
+    <div class="barbg"><div class="bar" id="spaceBar"></div></div>
+   </div>
+   <div class="section">
+    <h3>Physics model</h3>
+    <span class="formula">|F<sub>avg</sub>| = m × |v<sub>f</sub> − v<sub>i</sub>| / Δt</span>
+    <p class="small">For this test, final velocity is zero, so |F<sub>avg</sub>| = mv/Δt. With constant deceleration, stopping distance d = vΔt/2.</p>
+    <p class="note">Model assumptions: one-dimensional impact, constant deceleration, sensor comes to rest, and force means average net force. Real force varies during impact; peak force can be higher.</p>
+   </div>
+  </div>
+ </section>
+
+ <section class="card section">
+  <h2>3 · Collect and compare trial data</h2>
+  <p class="muted small">Record several trials. For a fair test of stopping time, keep mass and velocity unchanged while changing only stopping time.</p>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Trial</th><th>Mass (kg)</th><th>Velocity (m/s)</th><th>Stop time (s)</th><th>Avg. force (N)</th><th>Distance (cm)</th><th>Constraint</th></tr></thead>
+    <tbody id="trialRows"><tr><td colspan="7" class="muted">No trials recorded yet. Adjust the controls and select “Record trial.”</td></tr></tbody>
+   </table>
+  </div>
+  <div class="actions">
+   <button class="secondary" id="download">Download data as CSV</button>
+   <button class="secondary" id="clear">Clear trial data</button>
+  </div>
+ </section>
+
+ <section class="card section">
+  <h2>4 · Analyze the relationship</h2>
+  <p class="muted small">The curve below updates with the current mass and velocity. It shows how the model's average force changes with stopping time.</p>
+  <canvas id="chart" width="900" height="300" role="img" aria-label="Line graph of average impact force versus stopping time"></canvas>
+  <p class="note">The curve follows F = mv/Δt. It is a model prediction, not measured force-time data.</p>
+ </section>
+
+ <section class="card section">
+  <h2>5 · Engineering design decision</h2>
+  <p>Choose a stopping time that reduces average force while meeting the 12 cm space limit. Then justify your proposed protective package with evidence from your recorded trials.</p>
+  <div class="callout"><strong>Design criteria:</strong> Reduce average force compared with the rigid-barrier control. <strong>Constraint:</strong> Stopping distance must be 12 cm or less.</div>
+  <div class="question"><label for="claim">Claim · Which design setting is your best solution?</label><textarea id="claim" placeholder="My best design uses…"></textarea></div>
+  <div class="question"><label for="evidence">Evidence · Which trial measurements support your choice?</label><textarea id="evidence" placeholder="In trial…, the average force was…"></textarea></div>
+  <div class="question"><label for="reasoning">Reasoning · Explain your result using impulse and momentum.</label><textarea id="reasoning" placeholder="The momentum change is… Increasing collision time…"></textarea></div>
+  <div class="question"><label for="refine">Refine · What would you change or test next?</label><textarea id="refine" placeholder="I would test… because…"></textarea></div>
+  <div class="actions"><button class="secondary" id="print">Print / save lab report</button></div>
+ </section>
+
+ <section class="card section">
+  <h2>6 · Check your understanding</h2>
+  <details><summary>1. What happens to average force when stopping time increases, if mass and velocity stay the same?</summary><p>Average force decreases because the same momentum change occurs over a longer time interval.</p></details>
+  <details><summary>2. Why does cushioning help protect the sensor?</summary><p>Cushioning deforms during impact and can increase the time over which the sensor slows down. For the same change in momentum, a longer stopping time means a smaller average net force.</p></details>
+  <details><summary>3. What happens if mass or impact velocity increases?</summary><p>For the same stopping time, a larger mass or greater initial speed increases the magnitude of the momentum change and therefore increases average force.</p></details>
+  <details><summary>4. Why is the smallest calculated force not always the best design?</summary><p>The design must also meet constraints. In this lab, the stopping distance cannot exceed 12 cm. Real designs must also manage energy, material limits, cost, and protection of the object.</p></details>
+  <details><summary>5. What is one limitation of this simulation?</summary><p>It assumes constant deceleration and calculates average force. Real materials compress nonlinearly, forces change throughout the collision, and peak force may differ from the average.</p></details>
+ </section>
+
+ <section class="card section">
+  <h2>Teacher notes · NGSS alignment</h2>
+  <p><strong>HS-PS2-3:</strong> Apply scientific and engineering ideas to design, evaluate, and refine a device that minimizes the force on an object during a collision.</p>
+  <ul>
+   <li><strong>Science:</strong> Newton's second law, momentum, impulse–momentum theorem.</li>
+   <li><strong>Engineering practice:</strong> Define criteria and constraints; test, evaluate, and refine a solution.</li>
+   <li><strong>Crosscutting concept:</strong> Cause and effect.</li>
+   <li><strong>Suggested time:</strong> 55–75 minutes.</li>
+  </ul>
+  <p class="note">This browser-based model is an instructional simulation, not a validated physical testing instrument. For a hands-on extension, compare predictions with controlled drop tests using a nonfragile payload and safe classroom equipment.</p>
+ </section>
+</main>
+<footer>Impact Protection Engineering Lab · HS-PS2-3 · Standalone interactive HTML</footer>
+<script>
+(() => {
+ const $ = id => document.getElementById(id);
+ const controls = ['mass','velocity','time'];
+ let trials = [];
+ const read = () => ({m:+$('mass').value,v:+$('velocity').value,t:+$('time').value});
+ const calc = ({m,v,t}) => ({f:m*v/t,d:v*t/2,base:m*v/.01,baseD:v*.01/2});
+ const fmt = (n,d=1) => Number(n).toFixed(d);
+ function update(){
+  const p=read(), r=calc(p), reduction=(1-r.f/r.base)*100, safe=r.d<=.12+1e-9;
+  $('massOut').textContent=fmt(p.m,1)+' kg';
+  $('velocityOut').textContent=fmt(p.v,1)+' m/s';
+  $('timeOut').textContent=fmt(p.t,2)+' s';
+  $('svgSpeed').textContent=fmt(p.v,1)+' m/s';
+  $('force').textContent=fmt(r.f,1);
+  $('distance').textContent=fmt(r.d*100,1);
+  $('baseline').textContent=fmt(r.base,1);
+  $('reduction').textContent=fmt(reduction,1)+'%';
+  $('status').className='status '+(safe?'pass':'fail');
+  $('status').textContent=safe?'Constraint met · stopping distance is within 12 cm.':'Constraint exceeded · stopping distance is greater than 12 cm.';
+  $('spaceLabel').textContent=fmt(r.d*100,1)+' / 12 cm';
+  const pct=Math.min(100,r.d/.12*100);
+  $('spaceBar').style.width=pct+'%';
+  $('spaceBar').className='bar'+(safe?'':' over');
+  $('cushion').setAttribute('width',String(Math.max(8,Math.min(75,p.t/.15*75))));
+  drawChart(p);
+ }
+ function drawChart(p){
+  const c=$('chart'),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.clearRect(0,0,w,h);
+  const L=72,R=25,T=20,B=48, pw=w-L-R,ph=h-T-B;
+  const maxF=p.m*p.v/.01;
+  const yMax=Math.ceil(maxF/100)*100 || 100;
+  ctx.font='16px system-ui';ctx.fillStyle='#52657e';ctx.strokeStyle='#dce4ee';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){
+   const y=T+ph*i/4, val=yMax*(1-i/4);
+   ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-R,y);ctx.stroke();
+   ctx.textAlign='right';ctx.fillText(Math.round(val)+' N',L-10,y+5);
+  }
+  for(let i=0;i<=5;i++){
+   const x=L+pw*i/5, val=.01+i*.14/5;
+   ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,T+ph);ctx.stroke();
+   ctx.textAlign='center';ctx.fillText(val.toFixed(2),x,h-20);
+  }
+  ctx.fillStyle='#172235';ctx.textAlign='center';ctx.fillText('Stopping time (s)',L+pw/2,h-2);
+  ctx.save();ctx.translate(18,T+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Average force (N)',0,0);ctx.restore();
+  ctx.strokeStyle='#2457c5';ctx.lineWidth=4;ctx.beginPath();
+  for(let i=0;i<=140;i++){
+   const t=.01+i*.001, f=p.m*p.v/t;
+   const x=L+(t-.01)/.14*pw, y=T+ph-(f/yMax)*ph;
+   if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }ctx.stroke();
+  const cur=calc(p),x=L+(p.t-.01)/.14*pw,y=T+ph-(cur.f/yMax)*ph;
+  ctx.fillStyle='#137a52';ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();
+ }
+ function renderTrials(){
+  const body=$('trialRows');
+  if(!trials.length){body.innerHTML='<tr><td colspan="7" class="muted">No trials recorded yet. Adjust the controls and select “Record trial.”</td></tr>';return}
+  body.innerHTML=trials.map((t,i)=>`<tr><td>${i+1}</td><td>${fmt(t.m,1)}</td><td>${fmt(t.v,1)}</td><td>${fmt(t.t,2)}</td><td>${fmt(t.f,1)}</td><td>${fmt(t.d*100,1)}</td><td>${t.d<=.12?'Pass':'Fail'}</td></tr>`).join('');
+ }
+ controls.forEach(id=>$(id).addEventListener('input',update));
+ $('record').addEventListener('click',()=>{const p=read(),r=calc(p);trials.push({...p,...r});renderTrials()});
+ $('clear').addEventListener('click',()=>{trials=[];renderTrials()});
+ $('reset').addEventListener('click',()=>{ $('mass').value=2;$('velocity').value=3;$('time').value=.07;trials=[];renderTrials();update()});
+ $('download').addEventListener('click',()=>{
+  if(!trials.length){alert('Record at least one trial before downloading data.');return}
+  const rows=[['Trial','Mass (kg)','Velocity (m/s)','Stopping time (s)','Average force (N)','Stopping distance (cm)','Constraint'],...trials.map((t,i)=>[i+1,t.m,t.v,t.t,t.f,(t.d*100).toFixed(2),t.d<=.12?'Pass':'Fail'])];
+  const csv=rows.map(row=>row.join(',')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='impact-protection-lab-data.csv';a.click();URL.revokeObjectURL(url);
+ });
+ $('print').addEventListener('click',()=>window.print());
+ update();renderTrials();
+})();
+</script>
+</body>
+</html>
